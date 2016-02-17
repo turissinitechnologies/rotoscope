@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Simple parallax example</title>
+        <style type="text/css">
+            html {
+                height:100%;
+            }
+
+            body {
+                height: 500%;
+            }
+
+            .ball {
+                position:fixed;
+                width: 50px;
+                height: 50px;
+                border-radius: 50px;
+                top: 50%;
+                z-index:10;
+            }
+
+            .red {
+                background: red;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="ball red"></div>
+        <script src="./../dist/main.js"></script>
+        <script>
+            var rotoscope = require('rotoscope');
+            var windowWidth = window.innerWidth;
+            var redBall = document.querySelector('.ball.red');
+            var redBallWidth = redBall.offsetWidth;
+
+            var redBallClip = function (time) {
+                var dist = windowWidth - redBallWidth;
+                var x = time * dist;
+                var translate = 'translate3d(' + x + 'px, 0, 0)';
+
+                return function () {
+                    redBall.style.transform = translate;
+                };
+
+            };
+
+            var clock = rotoscope.createScrollClock(window);
+            var timeline = rotoscope.createTimeline();
+            timeline.appendChild(redBallClip, {
+                offset: 0,
+                duration: window.innerHeight * 4,
+                fill: 'both'
+            });
+
+            var player = rotoscope.createPlayer(clock, timeline);
+            player.currentTime = window.scrollY;
+            player.play();
+
+        </script>
+    </body>
+</html>
