@@ -8,21 +8,21 @@ npm install rotoscope
 ```
 
 ## Description
-Rotoscope is a super lightweight library designed to organize and compose animations in a fast and powerful way.
+Rotoscope is a super lightweight timeline-based animation library designed specifically for parallax animations.
 Rotoscope is 100% dependency free and is compatible with existing javascript animation frameworks like Greensock.
 
-Rotoscope is different from other animation libraries because it focuses on a two-part render cycle: Updating and then Drawing.
-Separating the render cycle into update and draw steps allows animations to scale in complexity without seeing performance problems.
+To make parallax drawing as performant as possible, rotoscope implements a two part render cycle: Updating and then Drawing.
+Separating the render cycle into updating and drawing allows your animations to becomes very complex without taking a performance hit. Your users will love the results!
 
-Rotoscope also emphasis functional interfaces and a unique tree data structure for organizing timelines.
+Rotoscope is also based on timelines, which allow you to treat complex animations as a single unit. This will change the way you think about animation and also promote animations that are DRY, testable and really, really fun to show off.
 
 If you are building complex animations or parallax effects, rotoscope will becomes an indispensible tool.
 
 
 ## API
 
-`Clips` provide the interface for rotoscope to interact with the outside world. 
-`Clips` are simply update functions that return draw functions. Clips take a `time` value between 0 and 1 as an argument;
+`Clip API` or `Clips` define how your parallax animations should render on the page.
+`Clips` are pure functions that take time as an argument. When `Clips` are called, they should calculate what the frame at `time` should look like. The `Clip` should then return a function that will draw at a later time. Clips have one argument, `time`, which is a number between 0 and 1. You can think of `time` as a percentage.
 
 Creating a clip:
 
@@ -44,7 +44,7 @@ drawHalfwayFrame(); // draws myElement 250px to right right
 
 ```
 
-Notice that the only thing that is specific to rotoscope is the function signature. `updateElementPosition` should return a function that simply draws the translate string at a time.
+Notice that the only thing that is specific to rotoscope is the function signature. `updateElementPosition` should return a function that simply draws the translate string at a time. You could easily insert GreenSock or any other animation framework into either of these functions and still get the benefits that rotoscope offers.
 
 Adding a updateElementPosition to a timeline:
 
@@ -73,18 +73,17 @@ When adding a `Clip` to a timeline, `offset`, `duration` and `fill` should be sp
 const drawTimeline = myTimeline(0.5);
 drawTimeline();
 
-To make a `Timeline` playable, we can create a clock. rotoscope comes with two clocks:
-  - requestAnimationFrame clock: Clock that uses requestAnimationFrame to time frames
-  - scroll clock: Clock that uses scroll position to time frames. Useful for parallax.
+
+We should then create a player to consume our timeline:
+
+```
+  const player = createPlayer(timeline); // Animation!
+```
+
+By default, the `player` will use the `window` object as its scroll target. If you need another element, simply create a scroll clock:
+
+```
+  const clock = createScrollClock(myScrollElement);
+  const player = createPlayer(timeline, clock); // Parallax not tied to window!
   
-```
-  const clock = createRafClock(); // creating request animation frame clock
-```
-
-
-We should then create a player to consume our clock and timeline:
-
-```
-  const player = createPlayer(clock, timeline);
-  player.play(); // Animation!
 ```
