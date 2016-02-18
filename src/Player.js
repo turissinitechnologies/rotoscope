@@ -1,36 +1,38 @@
 'use strict';
 
 import rafThrottle from './throttle/onRequestAnimationFrame';
+import { createScrollClock } from './ScrollClock';
 
-export function createPlayer (clock, timeline) {
+export function createPlayer (timeline, clock = createScrollClock(window)) {
     let currentTime = 0;
-
-    const throttledClockUpdate = rafThrottle(onClockUpdate);
+    let isDrawing = false;
+    const duration = timeline.duration || 1;
 
     function pause () {
         clock.unlisten(throttledClockUpdate);
     }
 
-    function cycle (time) {
-        const duration = timeline.duration || 1;
+    function onClockUpdate (time) {
+        if (isDrawing) {
+            return;
+        }
+        isDrawing = true;
+        let t = time + currentTime;
 
-        if (time >= duration) {
-            time = duration;
+        if (t >= duration) {
+            t = duration;
         }
 
-        const timelineTime = time / duration;
+        const draw = timeline(t / duration)
 
-        const timelineDraw = timeline(timelineTime);
-
-        requestAnimationFrame(function () {
-            timelineDraw();
-            currentTime = time;
+        window.requestAnimationFrame(function () {
+            draw();
+            currentTime = t;
+            isDrawing = false;
         });
     }
 
-    function onClockUpdate (time) {
-        cycle(time + currentTime);
-    }
+    clock.listen(onClockUpdate);
 
     return {
         get currentTime () {
@@ -38,7 +40,7 @@ export function createPlayer (clock, timeline) {
         },
 
         set currentTime (time) {
-            cycle(time);
+            onClockUpdate(time);
         },
 
         get duration () {
@@ -47,12 +49,6 @@ export function createPlayer (clock, timeline) {
 
         get paused () {
             return clock.isPaused();
-        },
-
-        pause,
-
-        play() {
-            clock.listen(throttledClockUpdate);
         }
 
     }

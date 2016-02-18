@@ -10,37 +10,42 @@ var _onRequestAnimationFrame = require('./throttle/onRequestAnimationFrame');
 
 var _onRequestAnimationFrame2 = _interopRequireDefault(_onRequestAnimationFrame);
 
+var _ScrollClock = require('./ScrollClock');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function createPlayer(clock, timeline) {
-    var currentTime = 0;
+function createPlayer(timeline) {
+    var clock = arguments.length <= 1 || arguments[1] === undefined ? (0, _ScrollClock.createScrollClock)(window) : arguments[1];
 
-    var throttledClockUpdate = (0, _onRequestAnimationFrame2.default)(onClockUpdate);
+    var currentTime = 0;
+    var isDrawing = false;
+    var duration = timeline.duration || 1;
 
     function pause() {
         clock.unlisten(throttledClockUpdate);
     }
 
-    function cycle(time) {
-        var duration = timeline.duration || 1;
+    function onClockUpdate(time) {
+        if (isDrawing) {
+            return;
+        }
+        isDrawing = true;
+        var t = time + currentTime;
 
-        if (time >= duration) {
-            time = duration;
+        if (t >= duration) {
+            t = duration;
         }
 
-        var timelineTime = time / duration;
+        var draw = timeline(t / duration);
 
-        var timelineDraw = timeline(timelineTime);
-
-        requestAnimationFrame(function () {
-            timelineDraw();
-            currentTime = time;
+        window.requestAnimationFrame(function () {
+            draw();
+            currentTime = t;
+            isDrawing = false;
         });
     }
 
-    function onClockUpdate(time) {
-        cycle(time + currentTime);
-    }
+    clock.listen(onClockUpdate);
 
     return {
         get currentTime() {
@@ -48,7 +53,7 @@ function createPlayer(clock, timeline) {
         },
 
         set currentTime(time) {
-            cycle(time);
+            onClockUpdate(time);
         },
 
         get duration() {
@@ -57,79 +62,12 @@ function createPlayer(clock, timeline) {
 
         get paused() {
             return clock.isPaused();
-        },
-
-        pause: pause,
-
-        play: function play() {
-            clock.listen(throttledClockUpdate);
         }
+
     };
 }
 
-},{"./throttle/onRequestAnimationFrame":5}],2:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.createRafClock = createRafClock;
-
-var _onRequestAnimationFrame = require('./throttle/onRequestAnimationFrame');
-
-var _onRequestAnimationFrame2 = _interopRequireDefault(_onRequestAnimationFrame);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function createRafClock() {
-    var handlers = [];
-    var _isPaused = true;
-    var raf = undefined;
-    var rafTime = undefined;
-
-    function loop() {
-        _isPaused = false;
-        raf = window.requestAnimationFrame(function (t) {
-            if (rafTime) {
-                (function () {
-                    var time = t - rafTime;
-                    handlers.forEach(function (handler) {
-                        handler(time / 1000);
-                    });
-                })();
-            }
-
-            rafTime = t;
-
-            if (_isPaused === false) {
-                loop();
-            }
-        });
-    }
-
-    return {
-        isPaused: function isPaused() {
-            return _isPaused;
-        },
-
-        stop: function stop() {
-            _isPaused = true;
-            rafTime = undefined;
-            window.cancelAnimationFrame(raf);
-        },
-
-        listen: function listen(handler) {
-            handlers.push(handler);
-        },
-
-        start: function start() {
-            loop();
-        }
-
-    };
-};
-
-},{"./throttle/onRequestAnimationFrame":5}],3:[function(require,module,exports){
+},{"./ScrollClock":2,"./throttle/onRequestAnimationFrame":4}],2:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -145,7 +83,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function createScrollClock(scrollTarget) {
     var handlers = [];
-    var scrollPos = scrollTarget.scrollY;
+    var scrollPos = 0;
 
     function onScroll() {
         var scrollY = scrollTarget.scrollY;
@@ -185,7 +123,7 @@ function createScrollClock(scrollTarget) {
     };
 };
 
-},{"./throttle/onRequestAnimationFrame":5}],4:[function(require,module,exports){
+},{"./throttle/onRequestAnimationFrame":4}],3:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -261,12 +199,20 @@ function createTimeline() {
             clipDuration = clip.duration;
         }
 
+        var timeBounds = {
+            offset: offset,
+            fill: fill,
+            duration: clipDuration
+        };
+
         clips.push({
             clip: clip,
             offset: offset,
             fill: fill,
             duration: clipDuration
         });
+
+        return timeBounds;
     };
 
     Object.defineProperty(timeline, 'duration', {
@@ -284,7 +230,7 @@ function createTimeline() {
     return timeline;
 };
 
-},{}],5:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -315,19 +261,16 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.createTimeline = exports.createScrollClock = exports.createRafClock = exports.createPlayer = undefined;
+exports.createTimeline = exports.createScrollClock = exports.createPlayer = undefined;
 
 var _Player = require('./Player');
-
-var _RafClock = require('./RafClock');
 
 var _ScrollClock = require('./ScrollClock');
 
 var _Timeline = require('./Timeline');
 
 exports.createPlayer = _Player.createPlayer;
-exports.createRafClock = _RafClock.createRafClock;
 exports.createScrollClock = _ScrollClock.createScrollClock;
 exports.createTimeline = _Timeline.createTimeline;
 
-},{"./Player":1,"./RafClock":2,"./ScrollClock":3,"./Timeline":4}]},{},[]);
+},{"./Player":1,"./ScrollClock":2,"./Timeline":3}]},{},[]);

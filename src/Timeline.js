@@ -63,12 +63,20 @@ export function createTimeline () {
             clipDuration = clip.duration;
         }
 
+        const timeBounds = {
+            offset,
+            fill,
+            duration: clipDuration
+        };
+
         clips.push({
             clip,
             offset,
             fill,
             duration: clipDuration
         });
+
+        return timeBounds;
 
     };
 

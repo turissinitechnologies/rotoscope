@@ -49,13 +49,11 @@
             var timeline = rotoscope.createTimeline();
             timeline.appendChild(redBallClip, {
                 offset: 0,
-                duration: window.innerHeight * 4,
+                duration: 1000,
                 fill: 'both'
             });
 
-            var player = rotoscope.createPlayer(clock, timeline);
-            player.currentTime = window.scrollY;
-            player.play();
+            var player = rotoscope.createPlayer(timeline);
 
         </script>
     </body>

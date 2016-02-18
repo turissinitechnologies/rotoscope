@@ -4,7 +4,7 @@ import rafThrottle from './throttle/onRequestAnimationFrame';
 
 export function createScrollClock (scrollTarget) {
     const handlers = [];
-    let scrollPos = scrollTarget.scrollY;
+    let scrollPos = 0;
 
     function onScroll () {
         const scrollY = scrollTarget.scrollY;
