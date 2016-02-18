@@ -21,6 +21,8 @@ If you are building complex animations or parallax effects, rotoscope will becom
 
 ## API
 
+### Clip
+
 `Clip API` or `Clips` define how your parallax animations should render on the page.
 `Clips` are pure functions that take time as an argument. When `Clips` are called, they should calculate what the frame at `time` should look like. The `Clip` should then return a function that will draw at a later time. Clips have one argument, `time`, which is a number between 0 and 1. You can think of `time` as a percentage.
 
@@ -45,6 +47,10 @@ drawHalfwayFrame(); // draws myElement 250px to right right
 ```
 
 Notice that the only thing that is specific to rotoscope is the function signature. `updateElementPosition` should return a function that simply draws the translate string at a time. You could easily insert GreenSock or any other animation framework into either of these functions and still get the benefits that rotoscope offers.
+
+### Timeline
+
+Timelines allow us to compose animations together to truly make something special. They behave like trees (Like the DOM) and can have children appended to them.  You can also append timelines to timelines, which allows you to reuse complex animations within bigger and more complex animations! It also allows your team to build big animations in a modular way.
 
 Adding a updateElementPosition to a timeline:
 
