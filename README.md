@@ -76,10 +76,10 @@ const rotoscopeWithAnimations = rotoscopeWithBounds.animate(function (timeline) 
 ```
 
 
-We can then "play" our animation!
+We can then start listening to scroll events and begin parallaxing
 
 ```
-  rotoscopeWithAnimations.play();
+  rotoscopeWithAnimations.start();
 ```
 
 
