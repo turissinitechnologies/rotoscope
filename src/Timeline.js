@@ -1,7 +1,6 @@
 'use strict';
 
-export function createTimeline () {
-    const clips = [];
+export function createTimeline (clips = []) {
 
     function getClipsAtTime (timelineTime) {
         return clips.filter((clip) => {
@@ -54,7 +53,24 @@ export function createTimeline () {
         }
     }
 
-    timeline.appendChild = function (clip, { offset = 0, fill = 'none', duration }) {
+    timeline.chainChild = function (child, clip, relativeBounds = {}) {
+        const childBounds = clips.filter((clip) => {
+            return clip.clip === child;
+        })[0];
+
+        const relativeOffset = (typeof relativeBounds.offset === 'number') ? relativeBounds.offset : 0;
+
+        const offset = childBounds.offset + childBounds.duration + relativeOffset;
+
+        const bounds = Object.assign(relativeBounds, {
+            offset: offset
+        });
+
+        return this.appendChild(clip, bounds);
+
+    }
+
+    timeline.appendChild = function (clip, { offset = 0, fill = 'both', duration }) {
         let clipDuration = 1;
 
         if (typeof duration === 'number') {
@@ -69,14 +85,15 @@ export function createTimeline () {
             duration: clipDuration
         };
 
-        clips.push({
+        const clipsClone = clips.slice(0);
+        clipsClone.push({
             clip,
             offset,
             fill,
             duration: clipDuration
         });
 
-        return timeBounds;
+        return createTimeline(clipsClone);
 
     };
 

@@ -20,40 +20,137 @@
                 z-index:10;
             }
 
+            .ball.yellow {
+                top: 0;
+            }
+
+            .ball.green {
+                top: 50%;
+                left: 50%;
+            }
+
             .red {
                 background: red;
+            }
+
+            .yellow {
+                background: yellow;
+            }
+
+            .green {
+                background: green;
             }
         </style>
     </head>
     <body>
+        <div class="ball yellow"></div>
         <div class="ball red"></div>
+        <div class="ball green"></div>
         <script src="./../dist/main.js"></script>
         <script>
             var rotoscope = require('rotoscope');
             var windowWidth = window.innerWidth;
             var redBall = document.querySelector('.ball.red');
+            var yellowBall = document.querySelector('.ball.yellow');
+            var greenBall = document.querySelector('.ball.green');
             var redBallWidth = redBall.offsetWidth;
+            var scrollDuration = document.body.offsetHeight - window.innerHeight;
 
-            var redBallClip = function (time) {
-                var dist = windowWidth - redBallWidth;
-                var x = time * dist;
-                var translate = 'translate3d(' + x + 'px, 0, 0)';
+            var timeline = rotoscope.createTimeline();
 
-                return function () {
-                    redBall.style.transform = translate;
+
+            function createBallTimeline () {
+                var timeline = rotoscope.createTimeline();
+
+                var redBallClip = function (time) {
+                    var dist = windowWidth - redBallWidth;
+                    var x = time * dist;
+                    var translate = 'translate3d(' + x + 'px, 0, 0)';
+
+                    return function () {
+                        redBall.style.transform = translate;
+                    };
+
                 };
 
-            };
+                var yellowBallClip = function (time) {
+                    var dist = 400;
+                    var y = time * dist;
+                    var translate = 'translate3d(0, ' + y + 'px, 0)';
 
-            var clock = rotoscope.createScrollClock(window);
-            var timeline = rotoscope.createTimeline();
-            timeline.appendChild(redBallClip, {
-                offset: 0,
-                duration: 1000,
-                fill: 'both'
-            });
+                    return function () {
+                        yellowBall.style.transform = translate;
+                    };
+                };
 
-            var player = rotoscope.createPlayer(timeline);
+
+                var greenBallClipPhysics = function (time) {
+                    var dist = 400;
+                    var y = -time * dist;
+                    var translate = 'scale3d(1, 1, 1) translate3d(0, ' + y + 'px, 0)';
+
+                    return function () {
+                        greenBall.style.transform = translate;
+                    };
+                };
+
+                const ballTimeline = timeline.appendChild(yellowBallClip, {
+                    offset: 0,
+                    duration: 1000
+                })
+                .chainChild(yellowBallClip, redBallClip, {
+                    offset: -500,
+                    duration: 1000
+                })
+                .chainChild(redBallClip, greenBallClipPhysics, {
+                    offset: -532,
+                    duration: 400,
+                    fill: 'forwards'
+                });
+
+                return ballTimeline;
+
+            }
+
+
+            rotoscope.createRotoscope(window)
+                .bounds({
+                    start: 0,
+                    duration: document.body.offsetHeight - window.innerHeight
+                })
+                .animate(function (timeline) {
+
+                    var greenBallClip = function (time) {
+                        var dist = 400;
+                        var y = -time * dist;
+                        var translate = 'scale3d(' + time + ', ' + time + ', 1)';
+
+                        return function () {
+                            greenBall.style.transform = translate;
+                        };
+                    };
+
+
+                    const ballTimeline = createBallTimeline();
+
+                    const ballClip = timeline.appendChild(greenBallClip, {
+                        offset: 0,
+                        duration: 1000
+                    })
+                    .appendChild(ballTimeline, {
+                        offset: 0,
+                        duration: scrollDuration
+                    });
+
+
+
+                    return timeline.appendChild(ballClip, {
+                        offset: 1000,
+                        duration: 2000
+                    });
+
+                })
+                .start();
 
         </script>
     </body>
