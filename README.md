@@ -30,10 +30,7 @@ If you are building complex animations or parallax effects, rotoscope will becom
  - Video parallax
 
 
-## High Level API
-
-
-### Creating a rotoscope instance:
+### Hello World example
 
 To begin our parallax, we start by creating a `rotoscope` instance. The `rotoscope` object is what enables us to have super performant parallax. All methods this object are chainable and  immutable. This means that when any of the methods below are called, you are returned a different `rotoscope` instance. This prevents unintended side effects from creeping into other, unrelated parts of your code.
 
@@ -86,9 +83,7 @@ We can then "play" our animation!
 ```
 
 
-### Instance API
-
-#### Clip
+### Clip
 
 In the `animation factory` above, we create a `Clip` function and append it to the timeline. `Clip` functions are what drives the animation and are broken down into two parts: Update and Draw. The first part, Update, is the calculation that happens before Draw. This part of the process takes a single argument, `time`, that is always a value between 0 and 1. You an think of `time` as percent.
 
@@ -109,7 +104,7 @@ const greenBallClip = function (time) {
 
 ```
 
-#### Timeline
+### Timeline
 
 Timelines allow us to compose animations together to truly make something special. They behave like trees (Like the DOM) and have children, which are `clip` functions and other timelines. They have an immutable API so appending a child will return a completely new `timeline` instance.
 
