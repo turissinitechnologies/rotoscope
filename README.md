@@ -32,7 +32,7 @@ If you are building complex animations or parallax effects, rotoscope will becom
 
 ### Hello World example
 
-To begin our parallax, we start by creating a `rotoscope` instance. The `rotoscope` object is what enables us to have super performant parallax. All methods this object are chainable and  immutable. This means that when any of the methods below are called, you are returned a different `rotoscope` instance. This prevents unintended side effects from creeping into other, unrelated parts of your code.
+To begin our parallax, we start by creating a `rotoscope` instance. The `rotoscope` object is what enables us to have super performant parallax. All methods on this object are chainable and  immutable. This means that when any of the methods below are called, you are returned a different `rotoscope` instance. This prevents unintended side effects from creeping into other, unrelated parts of your code.
 
 We should start by importing our `createRotoscope` function to create a rotoscope instance with a scroll target. A `scroll target` is any element that will emit `scroll events`. In most cases, this will probably be the window:
 
