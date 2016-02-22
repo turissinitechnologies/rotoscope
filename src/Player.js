@@ -1,56 +1,24 @@
 'use strict';
 
-import rafThrottle from './throttle/onRequestAnimationFrame';
-import { createScrollClock } from './ScrollClock';
-
-export function createPlayer (timeline, clock = createScrollClock(window)) {
-    let currentTime = 0;
-    let isDrawing = false;
+export function createPlayer (timeline, scrollTarget) {
     const duration = timeline.duration || 1;
+    const frames = [];
+    let raf;
 
-    function pause () {
-        clock.unlisten(throttledClockUpdate);
-    }
+    window.addEventListener('scroll', function () {
+        const time = scrollTarget.pageYOffset;
 
-    function onClockUpdate (time) {
-        if (isDrawing) {
-            return;
-        }
-        isDrawing = true;
-        let t = time + currentTime;
+        let frame = frames[time]
 
-        if (t >= duration) {
-            t = duration;
+        if (!frame) {
+            const t = (time >= duration) ? duration : time;
+            frame = frames[time] = timeline(t / duration);
         }
 
-        const draw = timeline(t / duration)
+        window.requestAnimationFrame(frame);
+    });
 
-        window.requestAnimationFrame(function () {
-            draw();
-            currentTime = t;
-            isDrawing = false;
-        });
-    }
 
-    clock.listen(onClockUpdate);
-
-    return {
-        get currentTime () {
-            return currentTime;
-        },
-
-        set currentTime (time) {
-            onClockUpdate(time);
-        },
-
-        get duration () {
-            return timeline.duration;
-        },
-
-        get paused () {
-            return clock.isPaused();
-        }
-
-    }
+    return {}
 
 }

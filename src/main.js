@@ -1,7 +1,6 @@
 'use strict';
 
 import { createPlayer } from './Player';
-import { createScrollClock } from './ScrollClock';
 import { createTimeline } from './Timeline';
 
 
@@ -35,14 +34,13 @@ function createParallax (scrollTarget, bounds = {}, timeline) {
         },
 
         start () {
-            const clock = createScrollClock(scrollTarget);
             const playerTimelineBounds = Object.assign(bounds, {
                 fill: 'both'
             });
 
             const playerTimeline = createTimeline().appendChild(scrollTarget, playerTimelineBounds);
 
-            return createPlayer(timeline, clock);
+            return createPlayer(timeline, scrollTarget);
         }
 
     }
