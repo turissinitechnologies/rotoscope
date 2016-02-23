@@ -4,8 +4,8 @@
   "description": "Timeline animation framework",
   "main": "dist/main.js",
   "scripts": {
-    "start" : "python -m SimpleHTTPServer 8000 & open http://localhost:8000/examples/simple.html",
-    "build": "mkdir ./build && browserify -r ./src/main.js:rotoscope -o build/main.js -t [ babelify --presets [ es2015 ] ]",
+    "start": "python -m SimpleHTTPServer 8000 & open http://localhost:8000/examples/simple.html",
+    "build": "mkdirp ./build && browserify -r ./src/main.js:rotoscope -o build/main.js -t [ babelify --presets [ es2015 ] ]",
     "prepublish": "babel src --presets babel-preset-es2015 --out-dir dist",
     "test": "test"
   },
@@ -30,6 +30,7 @@
     "babel-preset-es2015": "^6.5.0",
     "babelify": "^7.2.0",
     "browserify": "^13.0.0",
-    "jspm-server": "^1.0.1"
+    "jspm-server": "^1.0.1",
+    "mkdirp": "^0.5.1"
   }
 }
