@@ -14,6 +14,9 @@ $ npm run build
 $ npm start
 ```
 
+## Examples
+http://codepen.io/turissinitechnologies/full/wGwzvm/
+
 ## Why Rotoscope?
 Parallax is an awesome effect that can give your website and web app that surprise and delight that users will love you for. While parallax is awesome, it is not trivial to implement beyond simple translates. For complex animations, a more robust tool is needed and that tool is Rotoscope.
 
