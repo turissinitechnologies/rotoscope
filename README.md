@@ -1,4 +1,4 @@
-# rotoscope
+# Rotoscope
 
 A library designed to make parallax effortless and enjoyable!
 
@@ -12,7 +12,6 @@ npm install rotoscope
 ```
 $ npm run build
 $ npm start
-
 ```
 
 ## Why Rotoscope?
@@ -120,6 +119,7 @@ Adding our greenBallClip to a timeline:
 
 ```
 const myTimeline = createTimeline();
+
 myTimeline.appendChild(greenBallClip, {
   offset: 0,
   duration: 10,
