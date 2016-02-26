@@ -1,0 +1,28 @@
+{
+  "name": "rotoscope-gh-page",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "browserify -r ./src/main.js:rotoscope-demo -o ./main.js -t [ babelify --presets [ es2015 ] ]"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/turissinitechnologies/rotoscope.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/turissinitechnologies/rotoscope/issues"
+  },
+  "homepage": "https://github.com/turissinitechnologies/rotoscope#readme",
+  "dependencies": {
+    "rotoscope": "^0.2.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.5.1",
+    "babel-preset-es2015": "^6.5.0",
+    "babelify": "^7.2.0",
+    "browserify": "^13.0.0"
+  }
+}
