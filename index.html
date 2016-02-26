@@ -1,1 +1,493 @@
-My Page
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Simple parallax example</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style type="text/css">
+            body {
+                background: #000;
+                color:#fff;
+                font-family: Arial;
+                margin: 0;
+            }
+
+            @keyframes animation-pulse {
+              0%   {
+                  opacity: 0.3;
+              }
+              100% {
+                  opacity: 0.8;
+              }
+            }
+
+            h1, h2 {
+                padding:0;
+                margin:0;
+                font-weight:normal;
+            }
+
+
+
+
+            .stars {
+                position:fixed;
+                top:0;
+                z-index:1;
+            }
+
+            .star {
+                background: #fff;
+                height:5px;
+                width:5px;
+                box-shadow:0px 0px 4px 3px #fff;
+                border-radius:5px;
+                position:absolute;
+                top:50px;
+                left:50px;
+                animation:animation-pulse 5s infinite alternate;
+            }
+
+            .spaceship-container {
+                position: fixed;
+                top:0;
+                z-index:10;
+                transform: translate3d(0, 0, 0);
+                -webkit-transform: translate3d(0, 0, 0);
+            }
+
+            .spaceship {
+                transform: translate3d(0, 0, 0) rotate(90deg);
+                -webkit-transform: translate3d(0, 0, 0) rotate(90deg);
+            }
+
+            .meteor-container {
+                position:relative;
+                padding-top:300vh;
+                padding-bottom:100vh;
+                margin-left:30%;
+                z-index:100;
+            }
+
+            .meteor-container .meteor {
+                position:absolute;
+                z-index:20;
+            }
+
+            .meteor-container .meteor:nth-child(2) {
+                bottom: 45%;
+                left: 20%;
+            }
+
+            .meteor-container .meteor:nth-child(3) {
+                bottom: 23%;
+                right: 55%;
+            }
+
+            .ground {
+                margin-top:500vh;
+                background: green;
+                height:20vh;
+                position: relative;
+                z-index:100;
+                margin: 0;
+            }
+
+            .landed-text {
+                position:fixed;
+                top: 10%;
+                left: 50%;
+                transform: translateX(-50%);
+                -webkit-transform: translateX(-50%);
+                z-index:100;
+                opacity: 0;
+                text-align:center;
+            }
+
+            ul, li {
+                margin:0;
+                padding:0;
+                display: inline-block;
+            }
+
+            ul {
+                margin-top:30px;
+            }
+
+            li {
+                border-left:1px solid #ccc;
+                padding-left:10px;
+            }
+
+            li:first-child {
+                border-left:0;
+                padding-left:0;
+            }
+
+            h2 {
+                font-size:1em;
+                margin:20px 0;
+            }
+
+            a {
+                color:#fff;
+                text-decoration: none;
+            }
+
+            a:hover {
+                text-decoration: underline;
+            }
+
+            @media screen and (max-width: 500px) {
+                .spaceship {
+                    height:106px;
+                    width:40px;
+                }
+            }
+
+        </style>
+    </head>
+    <body>
+        <figure id="stars" class="stars">
+            <div id="stars-one" class="stars-one"><i class="star" style="left: 5.60239px; top: 435.16px; animation-duration: 5015.55ms; width: 0.599799px; height: 0.599799px; box-shadow: rgb(255, 255, 255) 0px 0px 8.84736px 3px; animation-delay: -832.924ms;"></i><i class="star" style="left: 1088.4px; top: 254.521px; animation-duration: 5233.18ms; width: 1.29325px; height: 1.29325px; box-shadow: rgb(255, 255, 255) 0px 0px 5.51469px 3px; animation-delay: -146.857ms;"></i><i class="star" style="left: 622.57px; top: 547.36px; animation-duration: 5232.66ms; width: 0.349532px; height: 0.349532px; box-shadow: rgb(255, 255, 255) 0px 0px 7.41687px 3px; animation-delay: -821.624ms;"></i><i class="star" style="left: 508.353px; top: 79.7018px; animation-duration: 5432.81ms; width: 2.52037px; height: 2.52037px; box-shadow: rgb(255, 255, 255) 0px 0px 7.66223px 3px; animation-delay: -139.373ms;"></i><i class="star" style="left: 924.304px; top: 520.828px; animation-duration: 5472.45ms; width: 0.776084px; height: 0.776084px; box-shadow: rgb(255, 255, 255) 0px 0px 6.30359px 3px; animation-delay: -30.8496ms;"></i><i class="star" style="left: 983.834px; top: 409.206px; animation-duration: 5475.52ms; width: 1.09081px; height: 1.09081px; box-shadow: rgb(255, 255, 255) 0px 0px 9.7967px 3px; animation-delay: -966.524ms;"></i><i class="star" style="left: 954.152px; top: 65.5296px; animation-duration: 5250.4ms; width: 1.47818px; height: 1.47818px; box-shadow: rgb(255, 255, 255) 0px 0px 5.80182px 3px; animation-delay: -954.392ms;"></i><i class="star" style="left: 1150.03px; top: 614.743px; animation-duration: 5112.07ms; width: 2.83607px; height: 2.83607px; box-shadow: rgb(255, 255, 255) 0px 0px 8.72756px 3px; animation-delay: -828.013ms;"></i><i class="star" style="left: 63.9417px; top: 474.907px; animation-duration: 5247.02ms; width: 3.50102px; height: 3.50102px; box-shadow: rgb(255, 255, 255) 0px 0px 5.83622px 3px; animation-delay: -361.746ms;"></i><i class="star" style="left: 1000.61px; top: 169.385px; animation-duration: 5423.99ms; width: 4.58905px; height: 4.58905px; box-shadow: rgb(255, 255, 255) 0px 0px 8.93127px 3px; animation-delay: -85.7196ms;"></i><i class="star" style="left: 556.493px; top: 358.553px; animation-duration: 5451.31ms; width: 3.21554px; height: 3.21554px; box-shadow: rgb(255, 255, 255) 0px 0px 4.90669px 3px; animation-delay: -868.578ms;"></i><i class="star" style="left: 518.431px; top: 541.781px; animation-duration: 5264.65ms; width: 0.46376px; height: 0.46376px; box-shadow: rgb(255, 255, 255) 0px 0px 4.90071px 3px; animation-delay: -883.33ms;"></i><i class="star" style="left: 1064.49px; top: 128.986px; animation-duration: 5353.18ms; width: 0.929194px; height: 0.929194px; box-shadow: rgb(255, 255, 255) 0px 0px 4.18583px 3px; animation-delay: -439.017ms;"></i><i class="star" style="left: 156.181px; top: 407.582px; animation-duration: 5198.17ms; width: 1.74085px; height: 1.74085px; box-shadow: rgb(255, 255, 255) 0px 0px 7.917px 3px; animation-delay: -851.782ms;"></i><i class="star" style="left: 142.684px; top: 175.023px; animation-duration: 5240.03ms; width: 1.29662px; height: 1.29662px; box-shadow: rgb(255, 255, 255) 0px 0px 6.86891px 3px; animation-delay: -972.23ms;"></i><i class="star" style="left: 1030.6px; top: 427.78px; animation-duration: 5190.19ms; width: 0.961596px; height: 0.961596px; box-shadow: rgb(255, 255, 255) 0px 0px 9.34221px 3px; animation-delay: -77.6466ms;"></i><i class="star" style="left: 830.398px; top: 617.385px; animation-duration: 5471.13ms; width: 0.456072px; height: 0.456072px; box-shadow: rgb(255, 255, 255) 0px 0px 9.60562px 3px; animation-delay: -637.7ms;"></i><i class="star" style="left: 659.86px; top: 395.91px; animation-duration: 5419.02ms; width: 4.90785px; height: 4.90785px; box-shadow: rgb(255, 255, 255) 0px 0px 7.68475px 3px; animation-delay: -810.317ms;"></i><i class="star" style="left: 649.086px; top: 626.976px; animation-duration: 5421.49ms; width: 2.65212px; height: 2.65212px; box-shadow: rgb(255, 255, 255) 0px 0px 7.87856px 3px; animation-delay: -322.788ms;"></i><i class="star" style="left: 141.484px; top: 314.379px; animation-duration: 5200.53ms; width: 2.51418px; height: 2.51418px; box-shadow: rgb(255, 255, 255) 0px 0px 9.18177px 3px; animation-delay: -851.995ms;"></i><i class="star" style="left: 56.0512px; top: 169.33px; animation-duration: 5140.61ms; width: 0.50081px; height: 0.50081px; box-shadow: rgb(255, 255, 255) 0px 0px 9.35531px 3px; animation-delay: -460.73ms;"></i><i class="star" style="left: 734.563px; top: 580.212px; animation-duration: 5135.12ms; width: 4.17249px; height: 4.17249px; box-shadow: rgb(255, 255, 255) 0px 0px 9.51995px 3px; animation-delay: -184.996ms;"></i><i class="star" style="left: 976.658px; top: 213.118px; animation-duration: 5283.78ms; width: 3.66985px; height: 3.66985px; box-shadow: rgb(255, 255, 255) 0px 0px 5.14594px 3px; animation-delay: -916.974ms;"></i><i class="star" style="left: 587.677px; top: 476.607px; animation-duration: 5105.73ms; width: 3.967px; height: 3.967px; box-shadow: rgb(255, 255, 255) 0px 0px 4.84317px 3px; animation-delay: -988.674ms;"></i><i class="star" style="left: 587.721px; top: 281.273px; animation-duration: 5213.16ms; width: 3.37223px; height: 3.37223px; box-shadow: rgb(255, 255, 255) 0px 0px 6.02812px 3px; animation-delay: -145.574ms;"></i><i class="star" style="left: 95.5892px; top: 120.569px; animation-duration: 5219.5ms; width: 4.74659px; height: 4.74659px; box-shadow: rgb(255, 255, 255) 0px 0px 9.46559px 3px; animation-delay: -846.928ms;"></i><i class="star" style="left: 831.253px; top: 230.007px; animation-duration: 5334.08ms; width: 3.70142px; height: 3.70142px; box-shadow: rgb(255, 255, 255) 0px 0px 4.565px 3px; animation-delay: -946.283ms;"></i></div>
+            <div id="stars-two" class="stars-one"><i class="star" style="left: 1036.75px; top: 9.73707px; animation-duration: 5056.01ms; width: 1.77573px; height: 1.77573px; box-shadow: rgb(255, 255, 255) 0px 0px 8.53343px 3px; animation-delay: -448.145ms;"></i><i class="star" style="left: 221.458px; top: 275.785px; animation-duration: 5055.04ms; width: 4.64654px; height: 4.64654px; box-shadow: rgb(255, 255, 255) 0px 0px 8.97424px 3px; animation-delay: -221.603ms;"></i><i class="star" style="left: 597.923px; top: 86.4485px; animation-duration: 5129.57ms; width: 4.35771px; height: 4.35771px; box-shadow: rgb(255, 255, 255) 0px 0px 8.58098px 3px; animation-delay: -342.587ms;"></i><i class="star" style="left: 1100.42px; top: 402.784px; animation-duration: 5428.76ms; width: 2.3181px; height: 2.3181px; box-shadow: rgb(255, 255, 255) 0px 0px 7.57796px 3px; animation-delay: -892.898ms;"></i><i class="star" style="left: 1150.61px; top: 37.2161px; animation-duration: 5398.11ms; width: 3.5157px; height: 3.5157px; box-shadow: rgb(255, 255, 255) 0px 0px 5.84891px 3px; animation-delay: -479.664ms;"></i><i class="star" style="left: 885.75px; top: 261.771px; animation-duration: 5151.23ms; width: 1.15097px; height: 1.15097px; box-shadow: rgb(255, 255, 255) 0px 0px 9.36646px 3px; animation-delay: -961.943ms;"></i><i class="star" style="left: 811.5px; top: 122.574px; animation-duration: 5451.43ms; width: 3.53365px; height: 3.53365px; box-shadow: rgb(255, 255, 255) 0px 0px 6.28587px 3px; animation-delay: -784.346ms;"></i><i class="star" style="left: 500.542px; top: 469.762px; animation-duration: 5453.99ms; width: 1.26648px; height: 1.26648px; box-shadow: rgb(255, 255, 255) 0px 0px 7.14841px 3px; animation-delay: -972.054ms;"></i><i class="star" style="left: 714.061px; top: 579.997px; animation-duration: 5054.81ms; width: 0.0345565px; height: 0.0345565px; box-shadow: rgb(255, 255, 255) 0px 0px 7.83904px 3px; animation-delay: -580.437ms;"></i><i class="star" style="left: 82.5694px; top: 264.904px; animation-duration: 5053.98ms; width: 2.01451px; height: 2.01451px; box-shadow: rgb(255, 255, 255) 0px 0px 7.91164px 3px; animation-delay: -746.941ms;"></i><i class="star" style="left: 1054.11px; top: 455.743px; animation-duration: 5030.68ms; width: 3.6083px; height: 3.6083px; box-shadow: rgb(255, 255, 255) 0px 0px 5.81848px 3px; animation-delay: -42.1602ms;"></i><i class="star" style="left: 463.96px; top: 128.852px; animation-duration: 5424.44ms; width: 0.800097px; height: 0.800097px; box-shadow: rgb(255, 255, 255) 0px 0px 9.18426px 3px; animation-delay: -334.548ms;"></i><i class="star" style="left: 261.521px; top: 288.125px; animation-duration: 5425ms; width: 2.69779px; height: 2.69779px; box-shadow: rgb(255, 255, 255) 0px 0px 4.72205px 3px; animation-delay: -888.973ms;"></i><i class="star" style="left: 928.738px; top: 147.528px; animation-duration: 5098.99ms; width: 4.68082px; height: 4.68082px; box-shadow: rgb(255, 255, 255) 0px 0px 4.41518px 3px; animation-delay: -727.21ms;"></i><i class="star" style="left: 243.516px; top: 410.416px; animation-duration: 5322.59ms; width: 4.86975px; height: 4.86975px; box-shadow: rgb(255, 255, 255) 0px 0px 9.09057px 3px; animation-delay: -800.485ms;"></i><i class="star" style="left: 486.72px; top: 273.945px; animation-duration: 5130.27ms; width: 1.24128px; height: 1.24128px; box-shadow: rgb(255, 255, 255) 0px 0px 5.34972px 3px; animation-delay: -275.043ms;"></i><i class="star" style="left: 263.984px; top: 3.32753px; animation-duration: 5195.36ms; width: 2.63595px; height: 2.63595px; box-shadow: rgb(255, 255, 255) 0px 0px 7.25709px 3px; animation-delay: -564.35ms;"></i><i class="star" style="left: 577.902px; top: 490.506px; animation-duration: 5305.72ms; width: 1.848px; height: 1.848px; box-shadow: rgb(255, 255, 255) 0px 0px 6.656px 3px; animation-delay: -157.415ms;"></i><i class="star" style="left: 596.274px; top: 206.331px; animation-duration: 5002.06ms; width: 2.16854px; height: 2.16854px; box-shadow: rgb(255, 255, 255) 0px 0px 5.404px 3px; animation-delay: -382.652ms;"></i><i class="star" style="left: 527.782px; top: 140.027px; animation-duration: 5101.14ms; width: 4.83128px; height: 4.83128px; box-shadow: rgb(255, 255, 255) 0px 0px 6.03467px 3px; animation-delay: -823.505ms;"></i><i class="star" style="left: 687.138px; top: 350.603px; animation-duration: 5437.63ms; width: 2.08759px; height: 2.08759px; box-shadow: rgb(255, 255, 255) 0px 0px 7.12489px 3px; animation-delay: -292.637ms;"></i><i class="star" style="left: 151.72px; top: 531.052px; animation-duration: 5499.81ms; width: 3.74258px; height: 3.74258px; box-shadow: rgb(255, 255, 255) 0px 0px 4.5509px 3px; animation-delay: -600.837ms;"></i><i class="star" style="left: 281.792px; top: 450.583px; animation-duration: 5069.82ms; width: 1.09869px; height: 1.09869px; box-shadow: rgb(255, 255, 255) 0px 0px 9.99341px 3px; animation-delay: -70.6782ms;"></i><i class="star" style="left: 160.033px; top: 584.754px; animation-duration: 5234.61ms; width: 2.30928px; height: 2.30928px; box-shadow: rgb(255, 255, 255) 0px 0px 9.68046px 3px; animation-delay: -643.029ms;"></i><i class="star" style="left: 856.83px; top: 406.798px; animation-duration: 5467.69ms; width: 0.346261px; height: 0.346261px; box-shadow: rgb(255, 255, 255) 0px 0px 7.01382px 3px; animation-delay: -524.731ms;"></i><i class="star" style="left: 757.51px; top: 43.1122px; animation-duration: 5460.25ms; width: 4.47418px; height: 4.47418px; box-shadow: rgb(255, 255, 255) 0px 0px 5.24999px 3px; animation-delay: -614.589ms;"></i><i class="star" style="left: 287.961px; top: 168.054px; animation-duration: 5355.9ms; width: 0.828338px; height: 0.828338px; box-shadow: rgb(255, 255, 255) 0px 0px 9.72973px 3px; animation-delay: -722.154ms;"></i></div>
+            <div id="stars-three" class="stars-one"><i class="star" style="left: 285.621px; top: 407.454px; animation-duration: 5373.79ms; width: 4.05179px; height: 4.05179px; box-shadow: rgb(255, 255, 255) 0px 0px 4.41429px 3px; animation-delay: -92.8605ms;"></i><i class="star" style="left: 560.549px; top: 33.9709px; animation-duration: 5384.64ms; width: 1.98301px; height: 1.98301px; box-shadow: rgb(255, 255, 255) 0px 0px 7.12429px 3px; animation-delay: -475.228ms;"></i><i class="star" style="left: 1098.01px; top: 513.513px; animation-duration: 5122.42ms; width: 1.14963px; height: 1.14963px; box-shadow: rgb(255, 255, 255) 0px 0px 9.63075px 3px; animation-delay: -296.499ms;"></i><i class="star" style="left: 179.175px; top: 338.763px; animation-duration: 5250.78ms; width: 1.82294px; height: 1.82294px; box-shadow: rgb(255, 255, 255) 0px 0px 5.26px 3px; animation-delay: -658.923ms;"></i><i class="star" style="left: 802.25px; top: 271.276px; animation-duration: 5375.25ms; width: 3.20284px; height: 3.20284px; box-shadow: rgb(255, 255, 255) 0px 0px 9.74052px 3px; animation-delay: -127.708ms;"></i><i class="star" style="left: 703.306px; top: 379.409px; animation-duration: 5365.15ms; width: 4.10593px; height: 4.10593px; box-shadow: rgb(255, 255, 255) 0px 0px 7.75305px 3px; animation-delay: -176.575ms;"></i><i class="star" style="left: 522.521px; top: 549.6px; animation-duration: 5323.31ms; width: 4.46054px; height: 4.46054px; box-shadow: rgb(255, 255, 255) 0px 0px 8.20857px 3px; animation-delay: -118.045ms;"></i><i class="star" style="left: 960.312px; top: 323.049px; animation-duration: 5024.08ms; width: 2.38767px; height: 2.38767px; box-shadow: rgb(255, 255, 255) 0px 0px 5.82472px 3px; animation-delay: -780.804ms;"></i><i class="star" style="left: 411.379px; top: 86.7406px; animation-duration: 5320.01ms; width: 2.02624px; height: 2.02624px; box-shadow: rgb(255, 255, 255) 0px 0px 8.30597px 3px; animation-delay: -805.228ms;"></i><i class="star" style="left: 1046.29px; top: 131.46px; animation-duration: 5306.58ms; width: 3.86672px; height: 3.86672px; box-shadow: rgb(255, 255, 255) 0px 0px 5.41703px 3px; animation-delay: -547.895ms;"></i><i class="star" style="left: 449.363px; top: 477.901px; animation-duration: 5159.55ms; width: 2.75413px; height: 2.75413px; box-shadow: rgb(255, 255, 255) 0px 0px 9.11673px 3px; animation-delay: -393.94ms;"></i><i class="star" style="left: 939.154px; top: 237.919px; animation-duration: 5291.63ms; width: 2.40791px; height: 2.40791px; box-shadow: rgb(255, 255, 255) 0px 0px 5.777px 3px; animation-delay: -386.263ms;"></i><i class="star" style="left: 853.397px; top: 587.51px; animation-duration: 5227.77ms; width: 0.413371px; height: 0.413371px; box-shadow: rgb(255, 255, 255) 0px 0px 4.80722px 3px; animation-delay: -935.246ms;"></i><i class="star" style="left: 647.323px; top: 174.436px; animation-duration: 5323.28ms; width: 1.14619px; height: 1.14619px; box-shadow: rgb(255, 255, 255) 0px 0px 8.47827px 3px; animation-delay: -575.279ms;"></i><i class="star" style="left: 314.649px; top: 53.5006px; animation-duration: 5348.27ms; width: 2.04313px; height: 2.04313px; box-shadow: rgb(255, 255, 255) 0px 0px 4.17766px 3px; animation-delay: -882.216ms;"></i><i class="star" style="left: 229.005px; top: 343.145px; animation-duration: 5051.95ms; width: 0.518048px; height: 0.518048px; box-shadow: rgb(255, 255, 255) 0px 0px 7.03189px 3px; animation-delay: -837.721ms;"></i><i class="star" style="left: 202.458px; top: 583.756px; animation-duration: 5433.65ms; width: 3.66883px; height: 3.66883px; box-shadow: rgb(255, 255, 255) 0px 0px 9.52989px 3px; animation-delay: -61.7795ms;"></i><i class="star" style="left: 325.879px; top: 531.04px; animation-duration: 5331.47ms; width: 4.44302px; height: 4.44302px; box-shadow: rgb(255, 255, 255) 0px 0px 9.37268px 3px; animation-delay: -665.831ms;"></i><i class="star" style="left: 958.155px; top: 481.089px; animation-duration: 5355.16ms; width: 0.907814px; height: 0.907814px; box-shadow: rgb(255, 255, 255) 0px 0px 6.84642px 3px; animation-delay: -357.049ms;"></i><i class="star" style="left: 748.509px; top: 124.397px; animation-duration: 5079.93ms; width: 1.14206px; height: 1.14206px; box-shadow: rgb(255, 255, 255) 0px 0px 6.51567px 3px; animation-delay: -327.345ms;"></i><i class="star" style="left: 596.206px; top: 161.641px; animation-duration: 5435.19ms; width: 3.32814px; height: 3.32814px; box-shadow: rgb(255, 255, 255) 0px 0px 7.51337px 3px; animation-delay: -802.123ms;"></i><i class="star" style="left: 372.305px; top: 371.668px; animation-duration: 5402.31ms; width: 3.92646px; height: 3.92646px; box-shadow: rgb(255, 255, 255) 0px 0px 7.78396px 3px; animation-delay: -48.6589ms;"></i><i class="star" style="left: 694.912px; top: 146.425px; animation-duration: 5286.29ms; width: 1.55993px; height: 1.55993px; box-shadow: rgb(255, 255, 255) 0px 0px 9.28785px 3px; animation-delay: -746.033ms;"></i><i class="star" style="left: 621.157px; top: 481.248px; animation-duration: 5136.21ms; width: 1.73292px; height: 1.73292px; box-shadow: rgb(255, 255, 255) 0px 0px 5.7224px 3px; animation-delay: -331.631ms;"></i><i class="star" style="left: 1150.49px; top: 189.215px; animation-duration: 5136.68ms; width: 4.68421px; height: 4.68421px; box-shadow: rgb(255, 255, 255) 0px 0px 5.91817px 3px; animation-delay: -723.608ms;"></i><i class="star" style="left: 369.596px; top: 114.68px; animation-duration: 5246.31ms; width: 0.0616529px; height: 0.0616529px; box-shadow: rgb(255, 255, 255) 0px 0px 8.40785px 3px; animation-delay: -968.748ms;"></i></div>
+        </figure>
+        <figure id="spaceship-container" class="spaceship-container">
+            <img class="spaceship" height="213" width="80" src="http://cliparts.co/cliparts/8iG/66p/8iG66pqoT.png" />
+        </figure>
+        <figure id="meteor-container" class="meteor-container"></figure>
+        <div id="ground" class="ground">
+
+        </div>
+        <div id="landed-text" class="landed-text">
+            <h1>Rotoscope has landed</h1>
+            <h2>Parallax has never been so fun</h2>
+            <ul>
+                <li><a target="_blank" href="https://www.npmjs.com/package/rotoscope">NPM</a></li>
+                <li><a target="_blank" href="https://github.com/turissinitechnologies/rotoscope">Github</a></li>
+                <li><a target="_blank" href="https://twitter.com/turissinitech">Twitter</a></li>
+            </ul>
+        </div>
+        <script>
+        if (typeof Object.assign != 'function') {
+(function () {
+Object.assign = function (target) {
+  'use strict';
+  if (target === undefined || target === null) {
+    throw new TypeError('Cannot convert undefined or null to object');
+  }
+
+  var output = Object(target);
+  for (var index = 1; index < arguments.length; index++) {
+    var source = arguments[index];
+    if (source !== undefined && source !== null) {
+      for (var nextKey in source) {
+        if (source.hasOwnProperty(nextKey)) {
+          output[nextKey] = source[nextKey];
+        }
+      }
+    }
+  }
+  return output;
+};
+})();
+}
+        </script>
+        <script src="./../build/main.js"></script>
+        <script>
+            var rotoscope = require('rotoscope');
+
+            function createParallax () {
+                var windowWidth = window.innerWidth;
+                var windowHeight = window.innerHeight;
+                var scrollDuration = document.body.offsetHeight - windowHeight;
+                var spaceship = document.querySelector('.spaceship');
+                var stars = document.getElementById('stars-two');
+                var starsTwo = document.getElementById('stars-three');
+                var spaceshipContainer = document.getElementById('spaceship-container');
+                var meteorContainer = document.getElementById('meteor-container');
+                var landedText = document.getElementById('landed-text');
+
+                function createSpaceShipTimeline () {
+                    var timeline = rotoscope.createTimeline();
+
+                    function buildTransformString (position) {
+                        return 'translate3d(' + position.translateX + 'px, ' + position.translateY + 'px, 0) rotate(' + position.rotate + 'deg)';
+                    }
+
+                    function renderTransform (element, transform) {
+                        return function () {
+                            element.style.transform = transform;
+                            element.style.webkitTransform = transform;
+                        }
+                    }
+
+                    function rotate (time, deg, position) {
+                        position.rotate -= (time * deg);
+
+                        return position;
+                    }
+
+                    function clone (obj) {
+                        return Object.keys(obj).reduce(function (seed, key) {
+                            seed[key] = obj[key];
+
+                            return seed;
+
+                        }, {});
+                    }
+
+                    function stepAnimation (initial) {
+                        const steps = [];
+
+                        return {
+                            addStep: function (handler) {
+                                var localSteps = steps.slice(0);
+                                steps.push(handler);
+
+                                return function (time) {
+                                    var position = localSteps.reduce(function (seed, handler) {
+                                        seed = handler(seed, 1);
+
+                                        return clone(seed);
+
+                                    }, clone(initial));
+
+                                    return handler(position, time);
+                                }
+
+
+                            }
+                        }
+
+                    }
+
+                    const animation = stepAnimation({
+                        width: spaceship.offsetWidth,
+                        height: spaceship.offsetHeight,
+                        translateY: 0,
+                        translateX: 0,
+                        rotate: 90
+                    });
+
+                    const launchStep = animation.addStep(function (position, time) {
+                        var xDist = windowWidth * 0.2;
+
+                        position.translateX += time * xDist
+
+                        return position;
+                    });
+
+                    function spaceshipFlying (time) {
+                        var position = launchStep(time);
+                        return renderTransform(spaceship, buildTransformString(position));
+                    }
+
+                    const firstRotateStep = animation.addStep(function (position, time) {
+                        position = rotate(time, -20, position);
+
+                        return position;
+                    });
+
+                    function spaceShipRotateDown (time) {
+                        var position = firstRotateStep(time);
+
+                        return renderTransform(spaceship, buildTransformString(position));
+                    }
+
+
+                    const firstSpeedBurst = animation.addStep(function (position, time) {
+                        var xDist = (windowWidth * 0.6) - position.translateX - (position.width / 2);
+                        var yDist = (windowHeight * 0.5) - position.translateY - (position.height / 2);
+
+                        position.translateX += time * xDist;
+                        position.translateY += time * yDist;
+
+                        return position;
+
+                    });
+
+                    const firstSpeedBurstClip = function (time) {
+                        var position = firstSpeedBurst(time);
+
+                        return renderTransform(spaceship, buildTransformString(position));
+                    }
+
+
+                    const firstDodgeRotate = animation.addStep(function (position, time) {
+                        return rotate(time, 20, position);
+                    });
+
+                    const firstDodgeRotateClip = function (time) {
+                        const position = firstDodgeRotate(time);
+
+                        return renderTransform(spaceship, buildTransformString(position));
+                    };
+
+
+                    const horizontal = animation.addStep(function (position, time) {
+                        var xDist = -(windowWidth * 0.3);
+                        position.translateX += time * xDist;
+
+                        return position;
+                    });
+
+                    const horizontalClip = function (time) {
+                        const position = horizontal(time);
+
+                        return renderTransform(spaceship, buildTransformString(position));
+                    }
+
+                    const prepareLanding = animation.addStep(function (position, time) {
+                        const xDist = (windowWidth * 0.5) - position.width - position.translateX;
+                        const yDist = -100;
+                        var position = rotate(time, 90, position);
+
+                        position.translateX += time * xDist;
+                        position.translateY += time * yDist;
+
+
+                        return position;
+                    });
+
+                    const prepareLandingClip = function (time) {
+                        const position = prepareLanding(time);
+
+                        return renderTransform(spaceship, buildTransformString(position));
+                    }
+
+
+                    const landing = animation.addStep(function (position, time) {
+                        const groundTop = document.getElementById('ground').offsetHeight;
+                        const yDist = (windowHeight - groundTop) - position.translateY - (position.height * 0.94);
+
+                        position.translateY += time * yDist;
+
+                        return position;
+                    });
+
+                    const landingClip = function (time) {
+                        const position = landing(time);
+
+                        return renderTransform(spaceship, buildTransformString(position));
+                    }
+
+
+                    return timeline.appendChild(spaceshipFlying, {
+                        offset: 0,
+                        duration: 10,
+                        fill: 'none'
+                    })
+                    .chainChild(spaceshipFlying, spaceShipRotateDown, {
+                        offset: 0,
+                        duration: 5,
+                        fill: 'none'
+                    })
+                    .chainChild(spaceShipRotateDown, firstSpeedBurstClip, {
+                        offset: 0,
+                        duration: 20,
+                        fill: 'none'
+                    })
+                    .chainChild(firstSpeedBurstClip, firstDodgeRotateClip, {
+                        offset: 0,
+                        duration: 5,
+                        fill: 'none'
+                    })
+                    .chainChild(firstDodgeRotateClip, horizontalClip, {
+                        offset: 0,
+                        duration: 100,
+                        fill: 'none'
+                    })
+                    .chainChild(horizontalClip, prepareLandingClip, {
+                        offset: 0,
+                        duration: 50,
+                        fill: 'none'
+                    })
+                    .chainChild(prepareLandingClip, landingClip, {
+                        offset: 0,
+                        duration: 50,
+                        fill: 'none'
+                    });
+
+
+                }
+
+                function createStarsTimeline() {
+                    return function (time) {
+                        var dist = -50;
+                        var transform = 'translate3d(0, ' + time * dist + 'px, 0)';
+
+                        return function () {
+                            stars.style.transform = transform;
+                            stars.style.webkitTransform = transform;
+                        }
+                    }
+                }
+
+                function createHorizontalStarsTimeline () {
+                    return function (time) {
+                        var dist = -(windowWidth * 0.5);
+                        var transform = 'translate3d(' + time * dist + 'px, 0, 0)';
+                        var starsOneTransform = 'translate3d(' + time * (dist * 0.3) + 'px, 0, 0)';
+
+                        return function () {
+                            stars.style.transform = starsOneTransform;
+                            starsTwo.style.transform = transform;
+
+                            stars.style.webkitTransform = starsOneTransform;
+                            starsTwo.style.webkitTransform = transform;
+                        }
+                    }
+                }
+
+                return rotoscope.createRotoscope(window)
+                    .bounds({
+                        start: 0,
+                        duration: scrollDuration
+                    })
+                    .animate(function (timeline) {
+                        const spaceshipTimeline = createSpaceShipTimeline();
+                        const starsTimeline = createStarsTimeline();
+                        const horizontalStarsTimeline = createHorizontalStarsTimeline();
+
+                        function landedTextClip (time) {
+                            return function () {
+                                landedText.style.opacity = time;
+                            }
+                        }
+
+                        return timeline.appendChild(spaceshipTimeline, {
+                            offset: 0,
+                            duration: scrollDuration,
+                            fill: 'both'
+                        })
+                        .appendChild(horizontalStarsTimeline, {
+                            offset: windowHeight * 0.5,
+                            duration: windowHeight * 1.2
+                        })
+                        .appendChild(landedTextClip, {
+                            offset: scrollDuration * 0.95,
+                            duration: scrollDuration * 0.05,
+                            fill: 'both'
+                        });
+
+
+                    })
+                    .start();
+                }
+
+                var player = {};
+                function begin () {
+                    if (typeof player.stop === 'function') {
+                        player.stop();
+                    }
+
+                    player = createParallax();
+                }
+
+                window.addEventListener('resize', begin);
+                begin();
+
+        </script>
+    </body>
+</html>
