@@ -9,7 +9,7 @@ function createPlayer(timeline, scrollTarget) {
     var frames = [];
     var raf = undefined;
 
-    window.addEventListener('scroll', function () {
+    function onScroll() {
         var time = scrollTarget.pageYOffset;
 
         var frame = frames[time];
@@ -20,7 +20,15 @@ function createPlayer(timeline, scrollTarget) {
         }
 
         window.requestAnimationFrame(frame);
-    });
+    }
 
-    return {};
+    onScroll();
+    scrollTarget.addEventListener('scroll', onScroll);
+
+    return {
+        stop: function stop() {
+            scrollTarget.removeEventListener('scroll', onScroll);
+        }
+
+    };
 }

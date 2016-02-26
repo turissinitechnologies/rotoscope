@@ -5,7 +5,7 @@ export function createPlayer (timeline, scrollTarget) {
     const frames = [];
     let raf;
 
-    window.addEventListener('scroll', function () {
+    function onScroll () {
         const time = scrollTarget.pageYOffset;
 
         let frame = frames[time]
@@ -16,9 +16,17 @@ export function createPlayer (timeline, scrollTarget) {
         }
 
         window.requestAnimationFrame(frame);
-    });
+    }
+
+    onScroll();
+    scrollTarget.addEventListener('scroll', onScroll);
 
 
-    return {}
+    return {
+        stop: function () {
+            scrollTarget.removeEventListener('scroll', onScroll);
+        }
+
+    }
 
 }
