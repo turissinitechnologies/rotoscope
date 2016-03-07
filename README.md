@@ -1,6 +1,6 @@
 # Rotoscope
 
-A library designed to make parallax effortless and enjoyable!
+Timeline based parallax library. Make parallax effortless and enjoyable!
 
 ## Installation
 ```
