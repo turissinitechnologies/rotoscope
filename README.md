@@ -134,7 +134,7 @@ myTimeline.appendChild(greenBallClip, {
 You can also 'glue' two `clip` functions together on a timeline. Say, for instance, that you wanted a red ball to move after the green ball was done. You could manually define an offset for the redball relative to the green ball, but that would be fragile. You can instead use the `chainChild` method on timeline to chain `clip` functions. This method takes three arguments: a `clip` function that already exists on the timeline. Another `clip` argument that will be chained to the end of the first argument. An `offset` object that defines time offsets -relative- to the first `clip`:
 
 ```
-myTimeline.appendChild(greenBallClip, redBallClip, {
+myTimeline.chainChild(greenBallClip, redBallClip, {
  offset: 0,
  duration: 10
 });
