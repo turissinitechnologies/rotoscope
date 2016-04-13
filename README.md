@@ -2,6 +2,7 @@
 
 A library designed to make parallax effortless and enjoyable!
 
+## Join the community on Slack!
 [![Slack Status](http://104.236.183.185:3030/badge.svg)](https://yourdomain.com)
 
 ## Installation
