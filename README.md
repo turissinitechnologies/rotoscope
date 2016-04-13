@@ -2,6 +2,8 @@
 
 A library designed to make parallax effortless and enjoyable!
 
+[![Slack Status](http://104.236.183.185:3030/badge.svg)](https://yourdomain.com)
+
 ## Installation
 ```
 npm install rotoscope
@@ -48,7 +50,7 @@ We should start by importing our `createRotoscope` function to create a rotoscop
 
 ```
   import { createRotoscope } from 'rotoscope';
-  
+
   const rotoscope = createRotoscope(window);
 ```
 
@@ -75,12 +77,12 @@ const rotoscopeWithAnimations = rotoscopeWithBounds.animate(function (timeline) 
           greenBall.style.transform = translate;
       };
   };
-  
+
   return timeline.appendChild(greenBallClip, {
     start: 0,
     duration: 100
   });
-  
+
 })
 
 ```
@@ -145,4 +147,3 @@ In addition to `offset`, `duration`, you should also specify `fill` mode when ap
    - `backwards` - When time is before clip, clip should be updated with time 0
    - `forwards` - When time is after clip, clip should be updated with time 1
    - `both` - Default. Clip will always be updated regardless of the time
-   
