@@ -2,7 +2,8 @@
 var messages = [
     'test',
     'again'
-
 ];
 
-console.log.apply(console, messages);
+messages.forEach(function (message) {
+    console.log.apply(console, message);
+});
