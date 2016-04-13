@@ -5,6 +5,9 @@ function printMessage (version) {
 
     var messages = [
         '',
+        '',
+        '',
+        '',
         '**********************************',
         '**',
         '**  Rotoscope v' + version,
@@ -20,6 +23,9 @@ function printMessage (version) {
         '**',
         '**',
         '**********************************',
+        '',
+        '',
+        '',
         ''
     ];
 
