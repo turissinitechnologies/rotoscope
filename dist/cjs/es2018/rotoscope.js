@@ -1,8 +1,12 @@
-import postcss from 'postcss';
-import path from 'path';
-import camelCase from 'camel-case';
-import prettier from 'prettier';
-import round from 'round-to';
+'use strict';
+
+function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+
+var postcss = _interopDefault(require('postcss'));
+var path = _interopDefault(require('path'));
+var camelCase = _interopDefault(require('camel-case'));
+var prettier = _interopDefault(require('prettier'));
+var round = _interopDefault(require('round-to'));
 
 const fs = require('fs');
 const css = /*css*/ `

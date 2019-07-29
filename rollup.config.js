@@ -27,5 +27,6 @@ function rollupConfig(config) {
 
 export default [
     rollupConfig({ format: 'es', target: 'es2018' }),
+    rollupConfig({ format: 'cjs', target: 'es2018' }),
     rollupConfig({ format: 'umd', target: 'es2018' })
 ];

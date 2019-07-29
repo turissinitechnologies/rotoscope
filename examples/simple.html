@@ -1,158 +1,35 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Simple parallax example</title>
         <style type="text/css">
-            html {
-                height:100%;
-            }
+            /* @keyframes slidein {
+                from {
+                    transform: translate3d(0, 0, 0);
+                }
 
-            body {
-                height: 500%;
+                to {
+                    transform: translate3d(0, 10px, 0);
+                }
+
+                90% {
+                    transform: translate3d(0, 50px, 0);
+                }
             }
 
             .ball {
-                position:fixed;
-                width: 50px;
-                height: 50px;
-                border-radius: 50px;
-                top: 50%;
-                z-index:10;
-            }
-
-            .ball.yellow {
-                top: 0;
-            }
-
-            .ball.green {
-                top: 50%;
-                left: 50%;
-                transform:scale(0);
-            }
-
-            .red {
                 background: red;
-            }
-
-            .yellow {
-                background: yellow;
-            }
-
-            .green {
-                background: green;
-            }
+                height: 20px;
+                width: 20px;
+                border-radius: 20px;
+                animation-duration: 400ms;
+                animation-name: slidein;
+                animation-timing-function: ease-in-out;
+                animation-fill-mode: forwards;
+            } */
         </style>
+        <script src="./test.js"></script>
     </head>
     <body>
-        <div class="ball yellow"></div>
-        <div class="ball red"></div>
-        <div class="ball green"></div>
-        <script src="./../build/main.js"></script>
-        <script>
-            var rotoscope = require('rotoscope');
-            var windowWidth = window.innerWidth;
-            var redBall = document.querySelector('.ball.red');
-            var yellowBall = document.querySelector('.ball.yellow');
-            var greenBall = document.querySelector('.ball.green');
-            var redBallWidth = redBall.offsetWidth;
-            var scrollDuration = document.body.offsetHeight - window.innerHeight;
-
-            var timeline = rotoscope.createTimeline();
-
-
-            function createBallTimeline () {
-                var timeline = rotoscope.createTimeline();
-
-                var redBallClip = function (time) {
-                    var dist = windowWidth - redBallWidth;
-                    var x = time * dist;
-                    var translate = 'translate3d(' + x + 'px, 0, 0)';
-
-                    return function () {
-                        redBall.style.transform = translate;
-                    };
-
-                };
-
-                var yellowBallClip = function (time) {
-                    var dist = 400;
-                    var y = time * dist;
-                    var translate = 'translate3d(0, ' + y + 'px, 0)';
-
-                    return function () {
-                        yellowBall.style.transform = translate;
-                    };
-                };
-
-
-                var greenBallClipPhysics = function (time) {
-                    var dist = 400;
-                    var y = -time * dist;
-                    var translate = 'scale3d(1, 1, 1) translate3d(0, ' + y + 'px, 0)';
-
-                    return function () {
-                        greenBall.style.transform = translate;
-                    };
-                };
-
-                const ballTimeline = timeline.appendChild(yellowBallClip, {
-                    offset: 0,
-                    duration: 1000
-                })
-                .chainChild(yellowBallClip, redBallClip, {
-                    offset: -500,
-                    duration: 1000
-                })
-                .chainChild(redBallClip, greenBallClipPhysics, {
-                    offset: -532,
-                    duration: 400,
-                    fill: 'forwards'
-                });
-
-                return ballTimeline;
-
-            }
-
-
-            rotoscope.createRotoscope(window)
-                .bounds({
-                    start: 0,
-                    duration: document.body.offsetHeight - window.innerHeight
-                })
-                .animate(function (timeline) {
-
-                    var greenBallClip = function (time) {
-                        var dist = 400;
-                        var y = -time * dist;
-                        var translate = 'scale3d(' + time + ', ' + time + ', 1)';
-
-                        return function () {
-                            greenBall.style.transform = translate;
-                        };
-                    };
-
-
-                    const ballTimeline = createBallTimeline();
-
-                    const ballClip = timeline.appendChild(greenBallClip, {
-                        offset: 0,
-                        duration: 1000
-                    })
-                    .appendChild(ballTimeline, {
-                        offset: 0,
-                        duration: scrollDuration
-                    });
-
-
-
-                    return timeline.appendChild(ballClip, {
-                        offset: 1000,
-                        duration: 2000
-                    });
-
-                })
-                .start();
-
-        </script>
+        <div class="ball"></div>
     </body>
 </html>
