@@ -2,13 +2,9 @@
   "name": "rotoscope",
   "version": "0.2.1",
   "description": "Timeline animation framework",
-  "main": "dist/main.js",
+  "main": "dist/rotoscope.js",
   "scripts": {
-    "preinstall": "node ./task/preinstall.js",
-    "start": "python -m SimpleHTTPServer 8000 & open http://localhost:8000/examples/simple.html",
-    "build": "mkdirp ./build && browserify -r ./src/main.js:rotoscope -o build/main.js -t [ babelify --presets [ es2015 ] ]",
-    "prepublish": "babel src --presets babel-preset-es2015 --out-dir dist",
-    "test": "test"
+    "build": "rollup -c rollup.config.js"
   },
   "repository": {
     "type": "git",
@@ -32,6 +28,12 @@
     "babelify": "^7.2.0",
     "browserify": "^13.0.0",
     "jspm-server": "^1.0.1",
-    "mkdirp": "^0.5.1"
+    "mkdirp": "^0.5.1",
+    "rollup": "^1.17.0",
+    "rollup-plugin-typescript2": "^0.22.1",
+    "typescript": "^3.5.3"
+  },
+  "dependencies": {
+    "postcss": "^7.0.17"
   }
 }
