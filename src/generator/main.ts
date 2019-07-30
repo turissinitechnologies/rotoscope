@@ -3,40 +3,7 @@ import path from 'path';
 import camelCase from 'camel-case';
 import prettier from 'prettier';
 import round from 'round-to';
-const fs = require('fs');
-
-const css = /*css*/`
-    @keyframes slidein {
-        0% {
-            opacity: 0;
-            padding-left: 10;
-        }
-
-        50% {
-            opacity: 0.1;
-        }
-
-        75% {
-            opacity: 0.8;
-        }
-
-        100% {
-            padding-left: 100;
-            opacity: 1;
-        }
-    }
-
-    .ball {
-        background: red;
-        height: 20px;
-        width: 20px;
-        border-radius: 20px;
-        animation-duration: 400ms;
-        animation-name: slidein;
-        animation-timing-function: ease-in-out;
-        animation-fill-mode: forwards;
-    }
-`
+const fs = require('fs-extra');
 
 
 interface DeclarationValue {
@@ -85,9 +52,18 @@ function getKeyFramePosition(selector: string): number {
 // }
 
 function parseDeclarationValue(decl: postcss.Declaration): DeclarationValue {
-    return {
-        value: parseFloat(decl.value),
+    const float = parseFloat(decl.value);
+    const value: DeclarationValue = {
+        value: float,
     };
+
+    const units = decl.value.replace(float + '', '');
+
+    if (units !== '') {
+        value.units = units;
+    }
+
+    return value;
 }
 
 function createAnimation(rule: postcss.AtRule): KeyframeAnimation {
@@ -131,13 +107,21 @@ function keylistFrameStatements(propertyIdentifier: string, list: KeyframeList):
             if (position > ${frame.position} && position <= ${nextFrame.position}) {
                 const elapsed = position - ${frame.position};
                 const percentComplete = elapsed / ${duration};
-                ${propertyIdentifier} = ${frame.rule.value} + (percentComplete * (${interpolateRange}));
+                ${propertyIdentifier} = {
+                    propertyName: '${propertyIdentifier}',
+                    value: ${frame.rule.value} + (percentComplete * (${interpolateRange})),
+                    ${nextFrame.rule.units === undefined ? '' : `units: '${nextFrame.rule.units}'`}
+                }
             }
         `;
     }).join('\n\n');
 
     return /*javascript*/`
-        let ${propertyIdentifier} = ${firstFrame.rule.value};
+        let ${propertyIdentifier}: KeyframeRule = {
+            propertyName: '${propertyIdentifier}',
+            value: ${firstFrame.rule.value},
+            ${firstFrame.rule.units === undefined ? '' : `units: '${firstFrame.rule.units}'`}
+        };
         ${nested}
     `;
 }
@@ -151,28 +135,40 @@ function generateInterpolation(animation: KeyframeAnimation): string {
         return keylistFrameStatements(identifier, list);
     }).join('\n\n');
 
-    const returnMap = identifiers.map((identifier) => {
-        return `${identifier}: ${identifier}`;
-    }).join(',\n');
 
     return /*javascript*/`
-        function interpolate(currentTime, totalTime) {
+        interface KeyframeRule {
+            propertyName: string;
+            value: number;
+            units?: string;
+        }
+
+        interface Keyframe {
+            rules: KeyframeRule[]
+        }
+        export function interpolate(currentTime: number, totalTime: number): Keyframe {
             const position = currentTime / totalTime;
             ${statements}
             return {
-                ${returnMap}
+                rules: [
+                    ${identifiers.join(',\n')}
+                ]
             }
         }
     `;
 }
 
+const css = fs.readFileSync(path.resolve('./examples/animation.css')).toString();
+
 postcss([]).process(css).then((result) => {
-    const animations = result.root.nodes.filter((node) => {
+    result.root.nodes.filter((node) => {
         return node.type === 'atrule' && node.name === 'keyframes';
     })
-    .map(createAnimation);
-
-    const source = generateInterpolation(animations[0]);
-    const pretty = prettier.format(source);
-    fs.writeFileSync(path.resolve('./examples/test.js'), pretty);
+    .map(createAnimation)
+    .forEach((animation) => {
+        const source = generateInterpolation(animation);
+        const pretty = prettier.format(source);
+        fs.mkdirpSync('./src/generated');
+        fs.writeFileSync(path.resolve(`./src/generated/${animation.name}.ts`), pretty);
+    });
 });

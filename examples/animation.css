@@ -1,0 +1,33 @@
+@keyframes slidein {
+    0% {
+        margin-left: 0;
+    }
+
+    100% {
+        margin-left: 100px;
+    }
+}
+
+@keyframes border {
+    0% {
+        border-radius: 20px;
+    }
+
+    100% {
+        border-radius: 0px;
+    }
+}
+
+.ball {
+    background: red;
+    height: 20px;
+    width: 20px;
+    border-radius: 20px;
+}
+
+.animated {
+    animation-duration: 400ms;
+    animation-name: slidein, border;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+}

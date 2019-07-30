@@ -1,35 +1,12 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <style type="text/css">
-            /* @keyframes slidein {
-                from {
-                    transform: translate3d(0, 0, 0);
-                }
-
-                to {
-                    transform: translate3d(0, 10px, 0);
-                }
-
-                90% {
-                    transform: translate3d(0, 50px, 0);
-                }
-            }
-
-            .ball {
-                background: red;
-                height: 20px;
-                width: 20px;
-                border-radius: 20px;
-                animation-duration: 400ms;
-                animation-name: slidein;
-                animation-timing-function: ease-in-out;
-                animation-fill-mode: forwards;
-            } */
-        </style>
-        <script src="./test.js"></script>
+        <link rel="stylesheet" type="text/css" href="./animation.css" />
     </head>
     <body>
         <div class="ball"></div>
+        <div class="ball animated"></div>
+        <input type="range" value="1" step="0.1" max="100" />
+        <script src="./rotoscope.js"></script>
     </body>
 </html>

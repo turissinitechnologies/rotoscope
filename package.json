@@ -5,7 +5,8 @@
   "main": "dist/rotoscope.js",
   "scripts": {
     "build": "rollup -c rollup.config.js",
-    "generate": "node ./dist/cjs/es2018/rotoscope.js"
+    "build:generator": "tsc --p ./tsconfig.generator.json",
+    "generate": "node ./dist/generator/main.js"
   },
   "repository": {
     "type": "git",
